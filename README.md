@@ -1,60 +1,85 @@
-# Genetic-Algorithm
-Find the minimum value of a function using a genetic algorithm
+# Genetic Algorithm Visualizer
 
-# code
+A modern, interactive visualization of a genetic algorithm finding the minimum of a mathematical function. This project demonstrates how genetic algorithms work through an intuitive web interface with real-time visualizations.
 
-    import random
-    import sys
+## Features
 
-    N = 2000
-    M = 100
+- Interactive web-based UI using Streamlit
+- Real-time visualization of the genetic algorithm's progress
+- 3D surface plot of the objective function
+- Dynamic parameter adjustment
+- Progress tracking and results display
+- Modern, responsive design
 
+## Objective Function
 
-    def foo(x, y):
-        return (x ** 2) - (y * 5) + 31
+The algorithm aims to find the minimum of the function:
+```
+f(x,y) = x² - 5y + 31
+```
 
+## Installation
 
-    def fitness(x, y):
-        ans = foo(x, y)
-        if ans == 0:
-            return sys.maxsize
-        else:
-            return abs(1 / ans)
+1. Clone the repository:
+```bash
+git clone https://github.com/arminmehraeen/Genetic-Algorithm.git
+cd Genetic-Algorithm
+```
 
+2. Create a virtual environment (recommended):
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-    solutions = []
-    for s in range(N):
-        solutions.append((random.uniform(-M, M), random.uniform(-M, M)))
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
 
-    best = []
-    for i in range(N):
-        rankedSolutions = []
-        for s in solutions:
-            rankedSolutions.append((fitness(s[0], s[1]), s))
+## Usage
 
-        rankedSolutions.sort()
-        rankedSolutions.reverse()
+1. Run the Streamlit app:
+```bash
+streamlit run app.py
+```
 
-        best.append(rankedSolutions[0])
-        bestSolutions = rankedSolutions[:M]
+2. Open your web browser and navigate to the URL shown in the terminal (typically http://localhost:8501)
 
-        elements = []
-        for s in bestSolutions:
-            elements.append(s[1][0])
-            elements.append(s[1][1])
+3. Use the sidebar to adjust parameters:
+   - Set the number of generations
+   - Click "Run Algorithm" to start the optimization
 
-        newGen = []
-        for _ in range(N):
-            o = random.choice(elements) * random.uniform(0.99, 1.01)
-            t = random.choice(elements) * random.uniform(0.99, 1.01)
-            newGen.append((o, t))
+4. View the results:
+   - Progress chart showing fitness scores over generations
+   - 3D surface plot of the objective function
+   - Table of top 10 solutions
+   - Best solution found
 
-        solutions = newGen
+## How It Works
 
-    best.sort()
-    best.reverse()
+1. **Initialization**: Creates a random population of solutions
+2. **Fitness Evaluation**: Calculates how good each solution is
+3. **Selection**: Keeps the best solutions
+4. **Reproduction**: Creates new solutions based on the best ones
+5. **Mutation**: Adds small random changes to maintain diversity
+6. **Iteration**: Repeats the process until convergence
 
-    print("Result ( Top 10 )")
-    for i in range(10):
-        print(f"{i + 1}) x:{round(best[i][1][0],5)} y:{round(best[i][1][1],5)}")
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Author
+
+Armin Mehraeen
+
+## Acknowledgments
+
+- Streamlit for the web framework
+- Plotly for interactive visualizations
+- NumPy for numerical computations
 
